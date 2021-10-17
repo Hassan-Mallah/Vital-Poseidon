@@ -1,2 +1,2 @@
 # Vital-Poseidon
-Python project
+Django Proejct: link shortner

@@ -1,5 +1,5 @@
 # Vital-Poseidon
-Django Proejct: link shortner
+Django + ajax Project: link shortner
 
 - to set git email: 
 ---

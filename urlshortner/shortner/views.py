@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import uuid
 from .models import Url
 from django.http import HttpResponse
@@ -9,7 +9,7 @@ def index(request: HttpResponse):
     return render(request, 'index.html')
 
 
-# get url and save it to DB
+# get url, create uid and save it to DB
 def create(request: HttpResponse):
     if request.method == 'POST':
         url = request.POST['link']
@@ -21,3 +21,20 @@ def create(request: HttpResponse):
         new_url.save()
 
         return HttpResponse(uid)
+
+
+# catch uid and redirect to url
+def go(request: HttpResponse, pk):
+    # get one or none
+    try:
+        # get link from DB
+        url_details = Url.objects.get(uuid=pk)
+        link = url_details.link
+
+        # check if link starts with http
+        if not link.startswith('http'):
+            link = 'http://' + link
+        return redirect(link)
+    except Exception as e:
+        print(e)
+        return HttpResponse(pk + ' not found, plz double check')

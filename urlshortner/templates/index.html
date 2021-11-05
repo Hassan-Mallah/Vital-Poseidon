@@ -79,12 +79,14 @@
     <h1>URL Shortener</h1>
     <form id="post-form">
         {% csrf_token %}
+        <!-- input id link is what django will get in the request -->
         <input type="text" name="link" id="link" placeholder="Enter URL here">
         <div class="buttons">
             <button type="submit" id="shorten">Shorten</button>
         </div>
     </form>
 
+    <!-- Final URL will be here, using h2 tag -->
     <section id="section"><h2></h2></section>
 
 </main>
@@ -94,14 +96,15 @@
         e.preventDefault(); // prevent page reload
 
         $.ajax({
-            type::'POST', // post request
+            type:'POST', // post request
             url:'/create', // django view
             data:{
                 link:$('#link').val(),
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val() // send crf Token
             },
-            // if everything is fine
-            success: function(){
+            // if everything is fine, data is HttpResponse response
+            success: function(data){
+                $('h2').html("localhost:8000/"+data)
         }
         });
     });
